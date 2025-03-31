@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIREGENT - AI Recruitment Tool</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to <span class="highlight">HIREGENT</span></h1>
+    <p>Smart AI-powered recruitment tool to shortlist candidates based on their resumes.</p>
+
+    <!-- Form for Job Description and Resume Upload -->
+    <form action="/process" method="post" enctype="multipart/form-data">
+      <label for="job-description">Enter Job Description:</label>
+      <textarea id="job-description" name="job_description" placeholder="Paste the job description here..." required></textarea>
+
+      <label for="resume-upload">Upload Resume (PDF or DOCX):</label>
+      <input type="file" id="resume-upload" name="resume_upload" accept=".pdf,.doc,.docx" />
+
+      <button class="btn process" type="submit">Process & Analyze</button>
+    </form>
+
+    <!-- Results Section -->
+    <div class="result" id="result">
+      <h3>Results will be displayed here after processing...</h3>
+    </div>
+  </div>
+</body>
+</html>

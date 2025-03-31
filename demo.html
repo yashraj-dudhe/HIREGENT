@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIREGENT - AI Recruitment Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to <span class="highlight">HIREGENT</span></h1>
+    <p>Smart AI-powered recruitment tool to shortlist candidates based on their resumes.</p>
+
+    <label for="job-description">Enter Job Description:</label>
+    <textarea id="job-description" placeholder="Paste the job description here..."></textarea>
+
+    <label for="resume-upload">Upload Resume (PDF or DOCX):</label>
+    <input type="file" id="resume-upload" accept=".pdf,.doc,.docx" />
+
+    <button class="btn process">Process & Analyze</button>
+
+    <div class="result" id="result">
+      <h3>Results will be displayed here...</h3>
+    </div>
+  </div>
+</body>
+</html>
+
+<!-- Style.css -->
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom right, #00416A, #E4E5E6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+  }
+
+  .container {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(240, 244, 248, 0.8));
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  h1 {
+    color: #00416A;
+    margin-bottom: 10px;
+  }
+
+  .highlight {
+    color: #007BFF;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #555;
+  }
+
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 600;
+  }
+
+  textarea, input[type='file'] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  textarea {
+    resize: none;
+    height: 150px;
+  }
+
+  .btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

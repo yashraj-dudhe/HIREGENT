@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIREGENT - Results</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Candidate Evaluation Results</h1>
+
+    <!-- Job Description Summary -->
+    <section class="card highlight-card">
+      <h2>Job Description Summary</h2>
+      <p><strong>Required Skills:</strong> Python, Machine Learning, SQL</p>
+      <p><strong>Experience:</strong> 3+ years</p>
+      <p><strong>Qualifications:</strong> B.Tech in Computer Science</p>
+      <p><strong>Responsibilities:</strong> Develop AI solutions, collaborate with cross-functional teams.</p>
+    </section>
+
+    <!-- Resume Summary -->
+    <section class="card highlight-card">
+      <h2>Candidate Resume Summary</h2>
+      <p><strong>Education:</strong> B.Tech in Computer Science</p>
+      <p><strong>Experience:</strong> 4 years in AI Development</p>
+      <p><strong>Skills:</strong> Python, Machine Learning, SQL, NLP</p>
+      <p><strong>Certifications:</strong> AI Specialist Certification</p>
+    </section>
+
+    <!-- Match Score Section -->
+    <section class="score-card highlight-score">
+      <h2>Candidate Match Score</h2>
+      <div class="score">85%</div>
+      <p>Great match! The candidate possesses most of the required skills and experience for the role.</p>
+    </section>
+
+    <!-- Interview Notification -->
+    <section class="notification">
+      <p>✅ <strong style="color: #ffffff;">Interview request sent to xyz@gmail.com</strong></p>
+    </section>
+  </div>
+</body>
+</html>
+
+<!-- Style.css -->
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom right, #00416A, #E4E5E6);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.1), 0 15px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00416A;
+  }
+
+  .card, .score-card {
+    background: rgba(240, 244, 248, 0.4);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .highlight-card {
+    border: 2px solid #007BFF;
+    background: rgba(0, 123, 255, 0.2);
+  }
+
+  .highlight-score {
+    border: 2px solid #00C851;
+    background: rgba(0, 200, 81, 0.2);
+  }
+
+  .card h2, .score-card h2 {
+    margin-bottom: 10px;
+    color: #007BFF;
+  }
+
+  .score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #00C851;
+    text-align: center;
+  }
+
+  .notification {
+    background: linear-gradient(to right, #2196F3, #42A5F5);
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 8px 0;
+  }
+
+  strong {
+    color: #007BFF;
+  }
+</style>
