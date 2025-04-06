@@ -1,11 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Summarization Result</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIREGENT - Results</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-    <h1>Summarization Result</h1>
-    <pre>{{ result }}</pre>
-    <a href="/">Go Back</a>
+  <div class="container">
+    <h1>Candidate Evaluation Results</h1>
+
+    <!-- Job Description Summary -->
+    <section class="card highlight-card">
+      <h2>Job Description Summary</h2>
+      <p>{{ result.job_summary }}</p>
+    </section>
+
+    <!-- Responsibilities -->
+    <section class="card highlight-card">
+      <h2>Key Responsibilities</h2>
+      <ul>
+        {% for item in result.responsibilities %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- Eligibility -->
+    <section class="card highlight-card">
+      <h2>Eligibility Criteria</h2>
+      <ul>
+        {% for item in result.eligibility %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- Skills -->
+    <section class="card highlight-card">
+      <h2>Skills & Technologies</h2>
+      <ul>
+        {% for item in result.skills %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <!-- Preferred Qualifications -->
+    <section class="card highlight-card">
+      <h2>Preferred Qualifications</h2>
+      <ul>
+        {% for item in result.preferred_qualifications %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <a href="/" class="btn">Go Back</a>
+  </div>
 </body>
 </html>

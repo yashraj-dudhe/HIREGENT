@@ -1,62 +1,290 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HIREGENT - Results</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <title>HIREGENT - Candidate Evaluation</title>
+  <link rel="stylesheet" href="/static/css/result.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="container">
-    <h1>Candidate Evaluation Results</h1>
-
-    <!-- Job Description Summary -->
-    <section class="card highlight-card">
-      <h2>Job Description Summary</h2>
-      <p>{{ result.job_summary }}</p>
-    </section>
-
-    <!-- Responsibilities -->
-    <section class="card highlight-card">
-      <h2>Key Responsibilities</h2>
-      <ul>
-        {% for item in result.responsibilities %}
-          <li>{{ item }}</li>
+  <header class="app-header">
+    <div class="header-container">
+      <h1>HIREGENT</h1>
+      <p>Advanced Resume Matching System</p>
+    </div>
+  </header>
+  
+  <main class="container">
+    <div class="hero-section">
+      <h2>Candidate Evaluation Results</h2>
+      <p class="subtitle">AI-powered resume analysis and job matching</p>
+    </div>
+    
+    <!-- Match Score Dashboard -->
+    <section class="card score-dashboard">
+      <div class="score-circle">
+        <div class="circle-inner">
+          <span class="score-value">{{ result.match_score }}%</span>
+          <span class="score-label">Match</span>
+        </div>
+      </div>
+      
+      {% if result.match_score|int >= 80 %}
+      <div class="match-status excellent">
+        <i class="fas fa-check-circle"></i> Excellent Match
+      </div>
+      {% elif result.match_score|int >= 65 %}
+      <div class="match-status good">
+        <i class="fas fa-thumbs-up"></i> Good Match
+      </div>
+      {% elif result.match_score|int >= 50 %}
+      <div class="match-status average">
+        <i class="fas fa-balance-scale"></i> Average Match
+      </div>
+      {% else %}
+      <div class="match-status low">
+        <i class="fas fa-exclamation-circle"></i> Low Match
+      </div>
+      {% endif %}
+      
+      {% if result.individual_scores %}
+      <h3>Score Breakdown</h3>
+      <div class="score-breakdown">
+        {% for key, value in result.individual_scores.items() %}
+          <div class="score-category">
+            <div class="score-header">
+              <span class="category-name">{{ key|capitalize }}</span>
+              <span class="category-value">{{ value|round|int }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress" style="width: {{ value|round|int }}%;
+                {% if value >= 80 %}background-color: #28a745;
+                {% elif value >= 65 %}background-color: #17a2b8;
+                {% elif value >= 50 %}background-color: #ffc107;
+                {% else %}background-color: #dc3545;{% endif %}">
+              </div>
+            </div>
+          </div>
         {% endfor %}
-      </ul>
+      </div>
+      {% endif %}
     </section>
-
-    <!-- Eligibility -->
-    <section class="card highlight-card">
-      <h2>Eligibility Criteria</h2>
-      <ul>
-        {% for item in result.eligibility %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <!-- Skills -->
-    <section class="card highlight-card">
-      <h2>Skills & Technologies</h2>
-      <ul>
-        {% for item in result.skills %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <!-- Preferred Qualifications -->
-    <section class="card highlight-card">
-      <h2>Preferred Qualifications</h2>
-      <ul>
-        {% for item in result.preferred_qualifications %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <a href="/" class="btn">Go Back</a>
-  </div>
+    
+    <!-- Candidate and Job Summary -->
+    <div class="results-grid">
+      <!-- Resume Summary -->
+      {% if result.resume_summary %}
+      <section class="card">
+        <h3><i class="fas fa-user-circle"></i> Candidate Profile</h3>
+        <div class="candidate-profile">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              {{ result.resume_summary.name|first|upper if result.resume_summary.name and result.resume_summary.name != "Not Found" else "C" }}
+            </div>
+            <div class="profile-info">
+              <h4>{{ result.resume_summary.name if result.resume_summary.name and result.resume_summary.name != "Not Found" else "Candidate" }}</h4>
+              {% if result.resume_summary.email and result.resume_summary.email != "Not Found" %}
+              <p><i class="fas fa-envelope"></i> {{ result.resume_summary.email }}</p>
+              {% endif %}
+              {% if result.resume_summary.phone and result.resume_summary.phone != "Not Found" %}
+              <p><i class="fas fa-phone"></i> {{ result.resume_summary.phone }}</p>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="profile-details">
+            <div class="detail-item">
+              <h5><i class="fas fa-graduation-cap"></i> Education</h5>
+              <ul class="detail-list">
+                {% if result.resume_summary.education %}
+                  {% if result.resume_summary.education is string %}
+                    <li>{{ result.resume_summary.education }}</li>
+                  {% else %}
+                    {% for edu in result.resume_summary.education[:3] %}
+                      <li>{{ edu }}</li>
+                    {% endfor %}
+                    {% if result.resume_summary.education|length > 3 %}
+                      <li class="more-items">+ {{ result.resume_summary.education|length - 3 }} more</li>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+              </ul>
+            </div>
+            
+            <div class="detail-item">
+              <h5><i class="fas fa-briefcase"></i> Experience</h5>
+              <ul class="detail-list">
+                {% if result.resume_summary.experience %}
+                  {% if result.resume_summary.experience is string %}
+                    <li>{{ result.resume_summary.experience }}</li>
+                  {% else %}
+                    {% for exp in result.resume_summary.experience[:3] %}
+                      <li>{{ exp }}</li>
+                    {% endfor %}
+                    {% if result.resume_summary.experience|length > 3 %}
+                      <li class="more-items">+ {{ result.resume_summary.experience|length - 3 }} more</li>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+                
+                {% if result.resume_summary.total_years %}
+                <li class="total-exp"><strong>Total: {{ result.resume_summary.total_years }} years</strong></li>
+                {% endif %}
+              </ul>
+            </div>
+            
+            <div class="detail-item">
+              <h5><i class="fas fa-cogs"></i> Skills</h5>
+              <div class="skills-tags">
+                {% if result.resume_summary.skills %}
+                  {% if result.resume_summary.skills is string %}
+                    <span class="skill-tag">{{ result.resume_summary.skills }}</span>
+                  {% else %}
+                    {% for skill in result.resume_summary.skills[:10] %}
+                      <span class="skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                    {% if result.resume_summary.skills|length > 10 %}
+                      <span class="more-items">+ {{ result.resume_summary.skills|length - 10 }} more</span>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <span class="not-found">Not specified</span>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <h5><i class="fas fa-certificate"></i> Certifications</h5>
+              <ul class="detail-list">
+                {% if result.resume_summary.certifications %}
+                  {% if result.resume_summary.certifications is string %}
+                    <li>{{ result.resume_summary.certifications }}</li>
+                  {% elif result.resume_summary.certifications|length > 0 %}
+                    {% for cert in result.resume_summary.certifications[:3] %}
+                      <li>{{ cert }}</li>
+                    {% endfor %}
+                    {% if result.resume_summary.certifications|length > 3 %}
+                      <li class="more-items">+ {{ result.resume_summary.certifications|length - 3 }} more</li>
+                    {% endif %}
+                  {% else %}
+                    <li class="not-found">Not specified</li>
+                  {% endif %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+      
+      <!-- Job Description Summary -->
+      <section class="card">
+        <h3><i class="fas fa-briefcase"></i> Job Description</h3>
+        <div class="job-summary">
+          <div class="job-overview scrollable-content">
+            <p>{{ result.job_summary }}</p>
+          </div>
+          
+          <div class="job-details">
+            <!-- Responsibilities -->
+            <div class="detail-item">
+              <h5><i class="fas fa-tasks"></i> Key Responsibilities</h5>
+              <ul class="detail-list scrollable-content">
+                {% if result.responsibilities %}
+                  {% for item in result.responsibilities %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+              </ul>
+            </div>
+            
+            <!-- Eligibility -->
+            <div class="detail-item">
+              <h5><i class="fas fa-clipboard-check"></i> Requirements</h5>
+              <ul class="detail-list scrollable-content">
+                {% if result.eligibility %}
+                  {% for item in result.eligibility %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+              </ul>
+            </div>
+            
+            <!-- Skills -->
+            <div class="detail-item">
+              <h5><i class="fas fa-cogs"></i> Required Skills</h5>
+              <div class="skills-tags scrollable-content">
+                {% if result.skills %}
+                  {% for skill in result.skills %}
+                    <span class="skill-tag">{{ skill }}</span>
+                  {% endfor %}
+                {% else %}
+                  <span class="not-found">Not specified</span>
+                {% endif %}
+              </div>
+            </div>
+            
+            <!-- Preferred Qualifications -->
+            <div class="detail-item">
+              <h5><i class="fas fa-award"></i> Preferred Qualifications</h5>
+              <ul class="detail-list scrollable-content">
+                {% if result.preferred_qualifications %}
+                  {% for item in result.preferred_qualifications %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                {% else %}
+                  <li class="not-found">Not specified</li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Actions Bar -->
+    <div class="actions-bar">
+      <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+      <button class="btn btn-success" onclick="window.print()"><i class="fas fa-print"></i> Print Results</button>
+      {% if result.match_score|int >= 65 %}
+      <a href="#" class="btn btn-accent"><i class="fas fa-envelope"></i> Contact Candidate</a>
+      {% endif %}
+    </div>
+  </main>
+  
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 HIREGENT - AI Resume Matching System</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Add simple interaction for expandable sections
+    document.addEventListener('DOMContentLoaded', function() {
+      const detailItems = document.querySelectorAll('.detail-item h5');
+      
+      detailItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const content = this.parentElement.querySelector('.detail-list, .skills-tags');
+          if (content) {
+            content.classList.toggle('expanded');
+            this.classList.toggle('expanded');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

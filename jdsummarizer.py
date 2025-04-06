@@ -136,6 +136,22 @@ def store_in_database(result):
     except Exception as e:
         print(f"❌ Error storing result in database: {e}")
 
+# ✅ Display Results in Clean Format
+def print_result(result):
+    print("\n--- 📄 Summarization Result ---\n")
+    
+    for key, value in result.items():
+        if isinstance(value, str):
+            print(f"**{key}**:")
+            if '\n' in value:
+                for item in value.split('\n'):
+                    print(f"  • {item.strip()}")
+            else:
+                print(f"  {value.strip()}")
+        else:
+            print(f"{key}: {value}")
+        print("\n" + "-" * 50)
+
 # ✅ Summarize Job Description Function
 def summarize_job_description(jd_text):
     print("🔎 Starting Job Description Summarization...")
@@ -147,10 +163,12 @@ def summarize_job_description(jd_text):
     store_in_database(result)
     
     print("✅ Job Description Summarized Successfully!")
+    
+    # Step 3: Display Formatted Result
+    print_result(result)
     return result
 
 # ✅ Example Usage
 if __name__ == "__main__":
     jd_text = """As a Data Scientist at XYZ, you will be responsible for designing, developing, and implementing AI/ML models..."""
     result = summarize_job_description(jd_text)
-    print("📄 Final Summary Result:", result)
